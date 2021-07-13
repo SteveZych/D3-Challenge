@@ -22,7 +22,7 @@ d3.csv("assets/data/data.csv").then(function(data){
 
     //Add X axis
     var x = d3.scaleLinear()
-        .domain([0,4000])
+        .domain([3,28])
         .range([0, width]);
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
@@ -30,7 +30,7 @@ d3.csv("assets/data/data.csv").then(function(data){
 
     //Add Y axis
     var y = d3.scaleLinear()
-        .domain([0,500000])
+        .domain([8,24])
         .range([height, 0]);
     svg.append("g")
         .call(d3.axisLeft(y));
@@ -42,6 +42,27 @@ d3.csv("assets/data/data.csv").then(function(data){
         .append("circle")
         .attr("cx", d => x(d.healthcare))
         .attr("cy", d => y(d.poverty))
-        .attr("r", 1.5)
+        .attr("r", 5)
         .style("fill", "#69b3a2")
+        .append("text")
+        .text(d => d.abbr)
+        .attr("x", d => x(d.abbr))
+        .attr("y", d => y(d.abbr))
+        .style("fill", "#000000")
+        .style("font-size", "14px");
+        
+    svg.append("text")
+        .attr("class","x label")
+        .attr("text-anchor", "end")
+        .attr("x", width -100)
+        .attr("y", height + 30)
+        .text("Lacks Healthcare (%)");
+    
+    svg.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", height - 400)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)")
+        .text("In Poverty (%)");
 });
